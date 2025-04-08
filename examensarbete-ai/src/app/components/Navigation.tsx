@@ -1,5 +1,4 @@
-
-import Link from 'next/link';
+import Link from "next/link";
 
 interface NavItemType {
   title: string;
@@ -14,45 +13,52 @@ export default function Navigation() {
       title: "Snickare",
       description: "Bygg och renovering",
       link: "/tjanster/snickare",
-      services: ["Altan & trall", "Platsbyggda hyllor", "Golvläggning"]
+      services: ["Altan & trall", "Platsbyggda hyllor", "Golvläggning"],
     },
     {
       title: "Elektriker",
       description: "Elinstallationer och felsökning.",
       link: "/tjanster/elektriker",
-      services: ["Belysning", "Eluttag", "Felsökning"]
+      services: ["Belysning", "Eluttag", "Felsökning"],
     },
     {
       title: "Måleri",
       description: "Målning och tapetsering.",
       link: "/tjanster/maleri",
-      services: ["Inomhusmålning", "Utomhusmålning", "Tapetsering"]
+      services: ["Inomhusmålning", "Utomhusmålning", "Tapetsering"],
     },
     {
       title: "Rörmokare",
       description: "VVS-tjänster och reparationer.",
       link: "/tjanster/rormokare",
-      services: ["Rörinstallation", "Vattenläckor", "Avloppsrensning"]
+      services: ["Rörinstallation", "Vattenläckor", "Avloppsrensning"],
     },
     {
       title: "Takläggare",
       description: "Takreparationer och installationer.",
       link: "/tjanster/taklaggare",
-      services: ["Takreparation", "Takläggning", "Takinspektion"]
+      services: ["Takreparation", "Takläggning", "Takinspektion"],
     },
   ];
 
   return (
-    <nav className="relative border-t border-b border-gray-200 dark:border-gray-700 px-6 sm:px-20 py-3 flex flex-wrap gap-6 text-sm sm:text-base">
-      {navItems.map((item, index) => (
-        <NavItem
-          key={index}
-          title={item.title}
-          description={item.description}
-          link={item.link}
-          services={item.services}
-        />
-      ))}
+    <nav className="bg-gray-800">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-center">
+          {/* Navigation Links */}
+          <div className="flex space-x-8">
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md text-lg font-semibold"
+              >
+                {item.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }
@@ -69,7 +75,9 @@ function NavItem({ title, description, link, services }: NavItemProps) {
     <div className="relative group">
       <Link href={link} className="block hover:text-blue-600 transition">
         <p className="font-medium text-gray-800 dark:text-white">{title}</p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
       </Link>
       <div className="absolute left-0 top-full mt-2 w-64 bg-white dark:bg-zinc-800 rounded-xl shadow-lg p-4 space-y-2 hidden group-hover:block z-50">
         {services.map((service, index) => (
