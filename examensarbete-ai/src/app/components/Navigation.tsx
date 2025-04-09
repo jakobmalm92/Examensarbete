@@ -14,31 +14,31 @@ export default function Navigation() {
     {
       title: 'Snickare',
       description: 'Bygg och renovering',
-      link: '/tjanster/snickare',
-      services: ['Altan & trall', 'Platsbyggda hyllor', 'Golvläggning'],
+      link: '/services/carpenter', // Här ändrar vi till '/services/carpenter'
+      services: ['Altan & Trall', 'Platsbyggda hyllor', 'Golvläggning'],
     },
     {
       title: 'Elektriker',
       description: 'Elinstallationer och felsökning.',
-      link: '/tjanster/elektriker',
+      link: '/services/electrician', // Här ändrar vi till '/services/electrician'
       services: ['Belysning', 'Eluttag', 'Felsökning'],
     },
     {
       title: 'Måleri',
       description: 'Målning och tapetsering.',
-      link: '/tjanster/maleri',
+      link: '/services/painter', // Här ändrar vi till '/services/painter'
       services: ['Inomhusmålning', 'Utomhusmålning', 'Tapetsering'],
     },
     {
       title: 'Rörmokare',
       description: 'VVS-tjänster och reparationer.',
-      link: '/tjanster/rormokare',
+      link: '/services/plumber', // Här ändrar vi till '/services/plumber'
       services: ['Rörinstallation', 'Vattenläckor', 'Avloppsrensning'],
     },
     {
       title: 'Takläggare',
       description: 'Takreparationer och installationer.',
-      link: '/tjanster/taklaggare',
+      link: '/services/roofer', // Här ändrar vi till '/services/roofer'
       services: ['Takreparation', 'Takläggning', 'Takinspektion'],
     },
   ]
