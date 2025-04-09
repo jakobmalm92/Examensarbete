@@ -2,7 +2,6 @@
 
 import { useParams } from 'next/navigation';
 
-// Typdefinition för tjänsteinformation
 type ServiceData = {
   title: string;
   description: string;
@@ -10,7 +9,6 @@ type ServiceData = {
   image: string;
 };
 
-// Här definierar vi de tjänster vi har (ex. snickare, målare)
 const servicesData: { [key: string]: ServiceData } = {
     carpenter: {
       title: 'Snickare',
@@ -28,19 +26,19 @@ const servicesData: { [key: string]: ServiceData } = {
       title: 'Elektriker',
       description: 'Elinstallationer och felsökning.',
       services: ['Belysning', 'Eluttag', 'Felsökning'],
-      image: '/images/electrician.jpg', // Lägg till rätt bild
+      image: '/images/electrician.jpg',
     },
     plumber: {
       title: 'Rörmokare',
       description: 'VVS-tjänster och reparationer.',
       services: ['Rörinstallation', 'Vattenläckor', 'Avloppsrensning'],
-      image: '/images/plumber.jpg', // Lägg till rätt bild
+      image: '/images/plumber.jpg',
     },
     roofer: {
       title: 'Takläggare',
       description: 'Takreparationer och installationer.',
       services: ['Takreparation', 'Takläggning', 'Takinspektion'],
-      image: '/images/roofer.jpg', // Lägg till rätt bild
+      image: '/images/roofer.jpg',
     },
   };
 
