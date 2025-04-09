@@ -55,17 +55,6 @@ export default function ServicePage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Hero sektion */}
-      <div className="mb-8">
-        <img
-          src={serviceData.image}
-          alt={serviceData.title}
-          className="rounded-xl shadow-lg w-full"
-        />
-        <h1 className="text-3xl font-bold mt-6">{serviceData.title}</h1>
-        <p className="mt-2 text-gray-600">{serviceData.description}</p>
-      </div>
-
       {/* Lista på tjänster */}
       <div className="grid gap-4 sm:grid-cols-2">
         {serviceData.services.map((service, index) => (
