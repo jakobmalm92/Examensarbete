@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import { Button } from "./components/ui/button";
@@ -22,8 +24,8 @@ function Main() {
           alt="Hero"
           className="w-full max-h-[70vh] object-cover"
         />
-        {/* Text ovanpå bilden */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 bg-black/30 dark:bg-black/50">
+          {/* Text ovanpå bilden */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 bg-black/30 dark:bg-black/50">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white">
             Välkommen
           </h1>
@@ -34,14 +36,12 @@ function Main() {
             Vi kopplar ihop dig med pålitliga yrkespersoner inom snickeri, VVS,
             måleri och mer. Välj en tjänst, välj en tid, och luta dig tillbaka.
           </p>
-          <a
-            href="#services"
-            className="inline-block bg-swedish-blue text-white px-6 py-3 rounded-full font-medium hover:bg-swedish-blue/90 transition"
+          <Button
+            className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+            onClick={() => (window.location.href = "/services")}
           >
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-              Utforska tjänster
-            </Button>
-          </a>
+            Utforska tjänster
+          </Button>
         </div>
       </div>
     </main>

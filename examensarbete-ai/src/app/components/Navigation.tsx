@@ -70,12 +70,15 @@ export default function Navbar() {
             onMouseEnter={() => setIsOpen(true)}
             onMouseLeave={() => setIsOpen(false)}
           >
-            <button className="font-medium text-gray-700 hover:text-blue-600 bg-transparent focus:outline-none">
+            <button
+              className="font-medium text-gray-700 hover:text-blue-600 bg-transparent focus:outline-none cursor-pointer"
+              onClick={() => (window.location.href = "/services")}
+            >
               Tjänster
             </button>
 
             {isOpen && (
-              <div className="absolute left-0 mt-2 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white shadow-lg rounded-xl z-50">
+              <div className="absolute left-0 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white shadow-lg rounded-xl z-50">
                 {services.map((service) => (
                   <Link
                     key={service.path}
@@ -101,7 +104,7 @@ export default function Navbar() {
             Kontakt
           </Link>
 
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer">
             Logga in
           </button>
         </div>

@@ -3,7 +3,6 @@
 import Footer from "@@/app/components/Footer";
 import { Button } from "@@/app/components/ui/button";
 import { useParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 type ServiceData = {
   price: string;
@@ -59,7 +58,7 @@ export default function ServicePage() {
     : params?.service; // Hantera array
 
   if (!service || !(service in servicesData)) {
-    return <div>Tjänsten finns inte!</div>; // Om ingen tjänst matchas
+    return <div>Tjänsten finns inte!</div>;
   }
 
   const serviceData = servicesData[service];
@@ -154,7 +153,7 @@ export default function ServicePage() {
               </div>
             </div>
             <Button
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
             >
               Begär offert
             </Button>
