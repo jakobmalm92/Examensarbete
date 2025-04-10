@@ -1,97 +1,111 @@
-'use client'
-import Link from 'next/link'
-import { useState } from 'react'
+"use client";
 
-interface NavItemType {
-  title: string
-  description: string
-  link: string
-  services: string[]
+import Link from "next/link";
+import { useState } from "react";
+
+interface Service {
+  name: string;
+  description: string;
+  path: string;
 }
 
-export default function Navigation() {
-  const navItems: NavItemType[] = [
-    {
-      title: 'Snickare',
-      description: 'Bygg och renovering',
-      link: '/services/carpenter', // Här ändrar vi till '/services/carpenter'
-      services: ['Altan & Trall', 'Platsbyggda hyllor', 'Golvläggning'],
-    },
-    {
-      title: 'Elektriker',
-      description: 'Elinstallationer och felsökning.',
-      link: '/services/electrician', // Här ändrar vi till '/services/electrician'
-      services: ['Belysning', 'Eluttag', 'Felsökning'],
-    },
-    {
-      title: 'Måleri',
-      description: 'Målning och tapetsering.',
-      link: '/services/painter', // Här ändrar vi till '/services/painter'
-      services: ['Inomhusmålning', 'Utomhusmålning', 'Tapetsering'],
-    },
-    {
-      title: 'Rörmokare',
-      description: 'VVS-tjänster och reparationer.',
-      link: '/services/plumber', // Här ändrar vi till '/services/plumber'
-      services: ['Rörinstallation', 'Vattenläckor', 'Avloppsrensning'],
-    },
-    {
-      title: 'Takläggare',
-      description: 'Takreparationer och installationer.',
-      link: '/services/roofer', // Här ändrar vi till '/services/roofer'
-      services: ['Takreparation', 'Takläggning', 'Takinspektion'],
-    },
-  ]
+const services: Service[] = [
+  {
+    name: "Snickare",
+    description: "Bygg och renovering",
+    path: "/services/carpenter",
+  },
+  {
+    name: "Elektriker",
+    description: "Elinstallationer och felsökning",
+    path: "/services/electrician",
+  },
+  {
+    name: "Måleri",
+    description: "Målning och tapetsering",
+    path: "/services/painter",
+  },
+  {
+    name: "Rörmokare",
+    description: "VVS-tjänster och reparationer",
+    path: "/services/plumber",
+  },
+  {
+    name: "Takläggare",
+    description: "Takreparationer och installationer",
+    path: "/services/roofer",
+  },
+];
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-center space-x-8">
-          {navItems.map((item, index) => (
-            <NavItem key={index} {...item} />
-          ))}
+    <nav className="border-b border-gray-200 bg-white px-4 py-3 shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="rounded-full bg-gray-800 p-2">
+            <span className="text-xl font-bold text-white">H</span>
+          </div>
+          <span className="text-lg font-bold text-gray-800">antverkare.se</span>
+        </Link>
+
+        <div className="hidden md:flex items-center space-x-6">
+          <Link
+            href="/"
+            className="font-medium text-gray-700 hover:text-blue-600"
+          >
+            Hem
+          </Link>
+          <Link
+            href="/om-oss"
+            className="font-medium text-gray-700 hover:text-blue-600"
+          >
+            Om oss
+          </Link>
+
+          {/* Dropdown för Tjänster */}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+          >
+            <button className="font-medium text-gray-700 hover:text-blue-600 bg-transparent focus:outline-none">
+              Tjänster
+            </button>
+
+            {isOpen && (
+              <div className="absolute left-0 mt-2 grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white shadow-lg rounded-xl z-50">
+                {services.map((service) => (
+                  <Link
+                    key={service.path}
+                    href={service.path}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-100 hover:text-blue-600"
+                  >
+                    <div className="text-sm font-medium leading-none">
+                      {service.name}
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-snug text-gray-500">
+                      {service.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/kontakt"
+            className="font-medium text-gray-700 hover:text-blue-600"
+          >
+            Kontakt
+          </Link>
+
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+            Logga in
+          </button>
         </div>
       </div>
     </nav>
-  )
-}
-
-interface NavItemProps {
-  title: string
-  description: string
-  link: string
-  services: string[]
-}
-
-function NavItem({ title, link, services }: NavItemProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <div
-      className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
-      <Link
-        href={link}
-        className="block px-4 py-2 font-semibold text-gray-300 hover:text-white hover:bg-gray-700 rounded-md"
-      >
-        {title}
-      </Link>
-
-      {isOpen && (
-        <div className="absolute left-0 mt-2 flex flex-col bg-white dark:bg-zinc-800 text-black dark:text-white shadow-lg rounded-xl p-4 min-w-[200px] z-50">
-          {services.map((service, index) => (
-            <Link
-              key={index}
-              href={`${link}#${service.toLowerCase().replace(/\s+/g, '-')}`}
-              className="hover:bg-gray-100 dark:hover:bg-zinc-700 rounded-md px-3 py-2 text-sm"
-            >
-              {service}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  )
+  );
 }
