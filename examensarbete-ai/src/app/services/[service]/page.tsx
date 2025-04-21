@@ -93,7 +93,7 @@ export default function ServicePage() {
     setLoading(true);
 
     try {
-      const response = await fetch("https://localhost:7073/api/offer", {
+      const response = await fetch("http://localhost:5030/api/offer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
