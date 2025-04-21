@@ -3,6 +3,7 @@
 import Footer from "@@/app/components/Footer";
 import { Button } from "@@/app/components/ui/button";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 type ServiceData = {
   price: string;
@@ -52,10 +53,71 @@ const servicesData: { [key: string]: ServiceData } = {
 };
 
 export default function ServicePage() {
-  const params = useParams(); // Hämta parametrar från URL
+  const params = useParams();
   const service = Array.isArray(params?.service)
     ? params.service[0]
-    : params?.service; // Hantera array
+    : params?.service;
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    description: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const validateForm = () => {
+    const { name, email, phone, description } = formData;
+    if (!name || !email || !phone || !description) {
+      setError("Alla fält måste fyllas i.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    setError(null);
+    setSuccessMessage(null);
+
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("https://localhost:7073/api/offer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          service: service,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse?.error || "Misslyckades att skicka offert");
+      }
+
+      const successResponse = await response.json();
+      setSuccessMessage(successResponse?.message || "Din offertförfrågan har skickats!");
+      setFormData({ name: "", email: "", phone: "", description: "" });
+    } catch (error) {
+      setError((error as Error).message || "Fel vid skickning. Försök igen senare.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!service || !(service in servicesData)) {
     return <div>Tjänsten finns inte!</div>;
@@ -74,9 +136,7 @@ export default function ServicePage() {
               className="w-full h-64 object-cover rounded-lg mb-4"
             />
             <h1 className="text-3xl font-bold mb-2">{serviceData.title}</h1>
-            <p className="text-lg text-gray-600 mb-4">
-              {serviceData.description}
-            </p>
+            <p className="text-lg text-gray-600 mb-4">{serviceData.description}</p>
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="bg-gray-100 px-4 py-2 rounded-lg">
                 <span className="block text-sm text-gray-500">Tidsåtgång</span>
@@ -89,73 +149,73 @@ export default function ServicePage() {
             </div>
           </div>
           <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-bold mb-4">
-              Boka {serviceData.title.toLowerCase()}
-            </h2>
+            <h2 className="text-xl font-bold mb-4">Boka {serviceData.title.toLowerCase()}</h2>
             <p className="mb-6">
-              Fyll i dina uppgifter och beskriv ditt projekt för att få en
-              kostnadsfri offert.
+              Fyll i dina uppgifter och beskriv ditt projekt för att få en kostnadsfri offert.
             </p>
+
+            {error && <div className="text-red-500 mb-4">{error}</div>}
+            {successMessage && <div className="text-green-500 mb-4">{successMessage}</div>}
+
             <div className="bg-white p-4 rounded-lg border mb-4">
               <div className="space-y-4">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Ditt namn
                   </label>
                   <input
                     type="text"
                     id="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     E-post
                   </label>
                   <input
                     type="email"
                     id="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                     Telefonnummer
                   </label>
                   <input
                     type="tel"
                     id="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                     Beskriv ditt projekt
                   </label>
                   <textarea
                     id="description"
+                    value={formData.description}
+                    onChange={handleChange}
                     rows={4}
                     className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   ></textarea>
                 </div>
               </div>
             </div>
+
             <Button
               className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+              onClick={handleSubmit}
+              disabled={loading}
             >
-              Begär offert
+              {loading ? "Skickar..." : "Begär offert"}
             </Button>
           </div>
         </div>
