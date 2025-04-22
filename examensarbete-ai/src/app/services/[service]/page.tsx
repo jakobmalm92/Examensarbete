@@ -1,9 +1,11 @@
 "use client";
 
 import Footer from "@@/app/components/Footer";
+import PageWrapper from "@@/app/components/PageWrapper";
 import { Button } from "@@/app/components/ui/button";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+
 
 type ServiceData = {
   price: string;
@@ -126,7 +128,7 @@ export default function ServicePage() {
   const serviceData = servicesData[service];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <PageWrapper>
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8">
           <div>
@@ -168,7 +170,7 @@ export default function ServicePage() {
                     id="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
+                    className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
@@ -180,7 +182,7 @@ export default function ServicePage() {
                     id="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
+                    className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
@@ -192,7 +194,7 @@ export default function ServicePage() {
                     id="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
+                    className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   />
                 </div>
                 <div>
@@ -204,7 +206,7 @@ export default function ServicePage() {
                     value={formData.description}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
+                    className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-swedish-blue focus:border-swedish-blue"
                   ></textarea>
                 </div>
               </div>
@@ -220,7 +222,6 @@ export default function ServicePage() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
+    </PageWrapper>
   );
 }

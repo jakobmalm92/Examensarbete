@@ -17,7 +17,7 @@ export default function ContactPage() {
             <input
               type="text"
               id="name"
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
+              className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
           <div>
@@ -27,7 +27,7 @@ export default function ContactPage() {
             <input
               type="email"
               id="email"
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
+              className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
           <div>
@@ -37,7 +37,7 @@ export default function ContactPage() {
             <textarea
               id="message"
               rows={4}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
+              className="w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-blue-600 focus:border-blue-600"
             ></textarea>
           </div>
           <button
