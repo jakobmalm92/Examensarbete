@@ -22,7 +22,7 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:5030/api/login", {
+      const response = await fetch("http://localhost:5030/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
