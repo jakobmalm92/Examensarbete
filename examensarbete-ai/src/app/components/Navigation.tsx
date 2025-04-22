@@ -98,10 +98,10 @@ export default function Navbar() {
           </div>
 
           <Link
-            href="/kontakt"
-            className="font-medium text-gray-700 hover:text-blue-600"
+            href="/contact"
+            className="font-medium text-gray-700 hover:text-blue-600 bg-transparent focus:outline-none cursor-pointer"
           >
-            Kontakt
+          Kontakt
           </Link>
 
           <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer">
