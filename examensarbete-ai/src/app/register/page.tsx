@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // För att hantera laddningsstatus
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -16,14 +17,24 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
+    setLoading(true); // Indikerar att begäran skickas
 
     if (!formData.email || !formData.password) {
       setError("Alla fält måste fyllas i.");
+      setLoading(false);
+      return;
+    }
+
+    // Validering av e-postadress
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError("Ange en giltig e-postadress.");
+      setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5030/api/auth/login", {
+      const response = await fetch("http://localhost:5030/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,24 +42,29 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       });
 
+      const jsonResponse = await response.json();
+
       if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse?.error || "Inloggning misslyckades.");
+        throw new Error(jsonResponse?.error || "Registrering misslyckades.");
       }
 
-      alert("Inloggning lyckades!");
+      setSuccess("Registrering lyckades! Du kan nu logga in.");
     } catch (error) {
+      console.error("Error:", error);
       setError((error as Error).message || "Ett fel inträffade.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }; // <-- Properly close the handleSubmit function here
 
   return (
     <PageWrapper>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold mb-4 text-center">Logga in</h1>
+          <h1 className="text-2xl font-bold mb-4 text-center">Skapa ett konto</h1>
           <form className="space-y-4" onSubmit={handleSubmit}>
             {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
+            {success && <div className="text-green-500 mb-4 text-center">{success}</div>}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 E-post
@@ -78,16 +94,11 @@ export default function LoginPage() {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+              disabled={loading} // Inaktivera knappen under laddning
             >
-              Logga in
+              {loading ? "Registrerar..." : "Registrera"}
             </button>
           </form>
-          <p className="mt-4 text-center text-sm text-gray-600">
-            Har du inget konto?{" "}
-            <Link href="/register" className="text-blue-600 hover:underline">
-              Skapa ett konto
-            </Link>
-          </p>
         </div>
       </div>
     </PageWrapper>
