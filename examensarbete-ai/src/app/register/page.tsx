@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import PageWrapper from "../components/PageWrapper";
 
 export default function RegisterPage() {
+  const router = useRouter(); // Initiera useRouter
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -12,6 +14,12 @@ export default function RegisterPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleLoginSuccess = () => {
+    setTimeout(() => {
+      router.push("/login"); // Omdirigera till en dashboard-sida efter en kort fördröjning
+    }, 2000); // 2 sekunders fördröjning
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,13 +57,14 @@ export default function RegisterPage() {
       }
 
       setSuccess("Registrering lyckades! Du kan nu logga in.");
+      handleLoginSuccess(); // Omdirigera efter en kort fördröjning
     } catch (error) {
       console.error("Error:", error);
       setError((error as Error).message || "Ett fel inträffade.");
     } finally {
       setLoading(false);
     }
-  }; // <-- Properly close the handleSubmit function here
+  };
 
   return (
     <PageWrapper>

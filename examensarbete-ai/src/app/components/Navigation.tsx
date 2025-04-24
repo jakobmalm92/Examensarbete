@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface Service {
   name: string;
@@ -39,6 +40,20 @@ const services: Service[] = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Kontrollera om användaren är inloggad (t.ex. om en token finns)
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // Sätt isLoggedIn till true om token finns
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Ta bort token
+    setIsLoggedIn(false); // Uppdatera state
+    router.push("/login"); // Omdirigera till inloggningssidan
+  };
 
   return (
     <nav className="border-b border-gray-200 bg-white px-4 py-3 shadow-sm">
@@ -101,15 +116,25 @@ export default function Navbar() {
             href="/contact"
             className="font-medium text-gray-700 hover:text-blue-600 bg-transparent focus:outline-none cursor-pointer"
           >
-          Kontakt
+            Kontakt
           </Link>
 
-          <Link
-            href="/login"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
-          >
-          Logga in
-          </Link>
+          {/* Dynamisk knapp för Logga in/Logga ut */}
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer"
+            >
+              Logga ut
+            </button>
+          ) : (
+            <button
+              onClick={() => router.push("/mypage")}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
+            >
+              Logga in
+            </button>
+          )}
         </div>
       </div>
     </nav>
