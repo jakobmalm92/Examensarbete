@@ -49,6 +49,14 @@ export default function Navbar() {
     setIsLoggedIn(!!token); // Sätt isLoggedIn till true om token finns
   }, []);
 
+  const handleLoginClick = () => {
+    if (isLoggedIn) {
+      router.push("/mypage"); // Skicka till /mypage om användaren är inloggad
+    } else {
+      router.push("/login"); // Skicka till /login om användaren inte är inloggad
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token"); // Ta bort token
     setIsLoggedIn(false); // Uppdatera state
@@ -119,7 +127,6 @@ export default function Navbar() {
             Kontakt
           </Link>
 
-          {/* Dynamisk knapp för Logga in/Logga ut */}
           {isLoggedIn ? (
             <button
               onClick={handleLogout}
@@ -129,7 +136,7 @@ export default function Navbar() {
             </button>
           ) : (
             <button
-              onClick={() => router.push("/mypage")}
+              onClick={handleLoginClick}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
             >
               Logga in
