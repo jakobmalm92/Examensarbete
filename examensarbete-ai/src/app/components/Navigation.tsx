@@ -41,6 +41,7 @@ const services: Service[] = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -49,13 +50,7 @@ export default function Navbar() {
     setIsLoggedIn(!!token); // Sätt isLoggedIn till true om token finns
   }, []);
 
-  const handleLoginClick = () => {
-    if (isLoggedIn) {
-      router.push("/mypage"); // Skicka till /mypage om användaren är inloggad
-    } else {
-      router.push("/login"); // Skicka till /login om användaren inte är inloggad
-    }
-  };
+  let dropdownTimeout: NodeJS.Timeout | null = null; // För att hantera dropdown-timern
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Ta bort token
@@ -127,16 +122,51 @@ export default function Navbar() {
             Kontakt
           </Link>
 
-          {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer"
+          {isLoggedIn && (
+            <div
+              className="relative"
+              onMouseEnter={() => {
+                if (dropdownTimeout) clearTimeout(dropdownTimeout); // Avbryt eventuell stängning
+                setIsDropdownOpen(true); // Öppna dropdown
+              }}
+              onMouseLeave={() => {
+                dropdownTimeout = setTimeout(
+                  () => setIsDropdownOpen(false),
+                  300
+                ); // Fördröj stängning
+              }}
             >
-              Logga ut
-            </button>
-          ) : (
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer">
+                Mina sidor
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                  <Link
+                    href="/mypage"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Profil
+                  </Link>
+                  <Link
+                    href="/settings"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Inställningar
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
+                  >
+                    Logga ut
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {!isLoggedIn && (
             <button
-              onClick={handleLoginClick}
+              onClick={() => router.push("/login")}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
             >
               Logga in
