@@ -1,6 +1,7 @@
 "use client";
 
 import Navigation from "./components/Navigation";
+import React from "react";
 import Footer from "./components/Footer";
 import { Button } from "./components/ui/button";
 
@@ -17,14 +18,12 @@ export default function Home() {
 function Main() {
   return (
     <main className="relative bg-white dark:bg-zinc-900">
-      {/* Hero-bild */}
       <div className="relative">
         <img
           src="pexels-burst-374861.jpg"
           alt="Hero"
           className="w-full max-h-[70vh] object-cover"
         />
-          {/* Text ovanpå bilden */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-6 bg-black/30 dark:bg-black/50">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white">
             Välkommen

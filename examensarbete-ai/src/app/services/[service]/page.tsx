@@ -1,6 +1,5 @@
 "use client";
 
-import Footer from "@@/app/components/Footer";
 import PageWrapper from "@@/app/components/PageWrapper";
 import { Button } from "@@/app/components/ui/button";
 import { useParams } from "next/navigation";

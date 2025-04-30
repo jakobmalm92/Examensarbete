@@ -9,7 +9,7 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); // För att hantera laddningsstatus
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -18,15 +18,15 @@ export default function RegisterPage() {
 
   const handleLoginSuccess = () => {
     setTimeout(() => {
-      router.push("/login"); // Omdirigera till en dashboard-sida efter en kort fördröjning
-    }, 2000); // 2 sekunders fördröjning
+      router.push("/login");
+    }, 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    setLoading(true); // Indikerar att begäran skickas
+    setLoading(true);
 
     if (!formData.email || !formData.password) {
       setError("Alla fält måste fyllas i.");
@@ -57,7 +57,7 @@ export default function RegisterPage() {
       }
 
       setSuccess("Registrering lyckades! Du kan nu logga in.");
-      handleLoginSuccess(); // Omdirigera efter en kort fördröjning
+      handleLoginSuccess();
     } catch (error) {
       console.error("Error:", error);
       setError((error as Error).message || "Ett fel inträffade.");
@@ -103,7 +103,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              disabled={loading} // Inaktivera knappen under laddning
+              disabled={loading}
             >
               {loading ? "Registrerar..." : "Registrera"}
             </button>

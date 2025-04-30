@@ -126,17 +126,20 @@ export default function Navbar() {
             <div
               className="relative"
               onMouseEnter={() => {
-                if (dropdownTimeout) clearTimeout(dropdownTimeout); // Avbryt eventuell stängning
-                setIsDropdownOpen(true); // Öppna dropdown
+                if (dropdownTimeout) clearTimeout(dropdownTimeout);
+                setIsDropdownOpen(true);
               }}
               onMouseLeave={() => {
                 dropdownTimeout = setTimeout(
                   () => setIsDropdownOpen(false),
-                  300
-                ); // Fördröj stängning
+                  200
+                );
               }}
             >
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer">
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer"
+                onClick={() => (window.location.href = "/mypage")}
+              >
                 Mina sidor
               </button>
               {isDropdownOpen && (
