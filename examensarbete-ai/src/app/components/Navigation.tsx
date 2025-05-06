@@ -53,9 +53,9 @@ export default function Navbar() {
   let dropdownTimeout: NodeJS.Timeout | null = null; // För att hantera dropdown-timern
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Ta bort token
-    setIsLoggedIn(false); // Uppdatera state
-    router.push("/login"); // Omdirigera till inloggningssidan
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    router.push("/login");
   };
 
   return (

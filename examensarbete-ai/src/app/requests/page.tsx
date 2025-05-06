@@ -3,8 +3,17 @@
 import { useEffect, useState } from "react";
 import PageWrapper from "../components/PageWrapper";
 
+interface Request {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    description: string;
+    createdAt: string;
+    }
+
 export default function RequestsPage() {
-  const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +54,7 @@ export default function RequestsPage() {
         <h1 className="text-3xl font-bold mb-4">Dina Offertförfrågningar</h1>
         {requests.length > 0 ? (
           <ul className="list-disc list-inside">
-            {requests.map((request: any) => (
+            {requests.map((request) => (
               <li key={request.id}>
                 <strong>{request.name}</strong> ({request.email}) - {request.phone}
                 <p>{request.description}</p>

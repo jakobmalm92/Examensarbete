@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import PageWrapper from "../components/PageWrapper";
 
 export default function RegisterPage() {
-  const router = useRouter(); // Initiera useRouter
+  const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

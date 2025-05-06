@@ -6,6 +6,7 @@ import PageWrapper from "../components/PageWrapper";
 
 export default function MyPage() {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
 
@@ -23,6 +24,12 @@ export default function MyPage() {
   if (isLoading) {
     return null;
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    router.push("/");
+  };
 
   return (
     <PageWrapper>
@@ -52,7 +59,9 @@ export default function MyPage() {
                 </button>
               </li>
               <li>
-                <button className="w-full text-left px-4 py-2 hover:bg-gray-200 rounded cursor-pointer text-red-600">
+                <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-200 rounded cursor-pointer text-red-600">
                     Logga ut
                 </button>
               </li>

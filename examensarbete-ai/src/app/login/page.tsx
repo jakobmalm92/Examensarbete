@@ -38,10 +38,9 @@ export default function LoginPage() {
 
       const jsonResponse = await response.json();
 
-      // Spara token (om du använder JWT)
       localStorage.setItem("token", jsonResponse.token);
 
-      // Omdirigera till mypage
+
       window.location.href = "/mypage";
     } catch (error) {
       setError((error as Error).message || "Ett fel inträffade.");
