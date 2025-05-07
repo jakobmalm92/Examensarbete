@@ -38,8 +38,11 @@ export default function LoginPage() {
 
       const jsonResponse = await response.json();
 
-      localStorage.setItem("token", jsonResponse.token);
+      if (!jsonResponse.token) {
+        throw new Error("Ingen token mottagen.");
+      }
 
+      localStorage.setItem("token", jsonResponse.token);
 
       window.location.href = "/mypage";
     } catch (error) {
